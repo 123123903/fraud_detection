@@ -1,12 +1,10 @@
 """
-信用卡欺诈检测 - 主程序（v3）
+信用卡欺诈检测 - 主程序
 基于多算法融合的信用卡欺诈检测研究（CS-Stack框架）
-
 运行方式：python main.py
 数据集：data/creditcard.csv
 https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 """
-
 import os, warnings
 warnings.filterwarnings('ignore')
 
@@ -42,7 +40,7 @@ def best_threshold(proba_val, y_val):
     return thr[np.argmax(f1s[:-1])]
 
 
-# ── 1. 数据 ──────────────────────────────
+# 1. 数据
 def load_data():
     print("=" * 60)
     print("【1】加载数据集...")
@@ -67,7 +65,7 @@ def load_data():
     return X_tr, X_val, X_test, y_tr, y_val, y_test
 
 
-# ── 2. 模型定义 ────────────────────────────
+# 2. 模型定义 
 def build_models():
     """
     用 class_weight='balanced' 统一处理不平衡，
@@ -133,7 +131,7 @@ def build_cs_stack():
         stack_method='predict_proba', n_jobs=1)
 
 
-# ── 3. 评估 ───────────────────────────────
+#3. 评估
 def evaluate(name, model, X_tr, y_tr, X_val, y_val, X_test, y_test):
     print(f"  训练：{name} ...", end=' ', flush=True)
     model.fit(X_tr, y_tr)
@@ -155,7 +153,7 @@ def evaluate(name, model, X_tr, y_tr, X_val, y_val, X_test, y_test):
     return m, test_p
 
 
-# ── 4. 可视化 ─────────────────────────────
+#  4. 可视化
 def plot_pr_curves(proba_dict, y_test):
     plt.figure(figsize=(10, 7))
     colors = plt.cm.tab10.colors
@@ -217,12 +215,12 @@ def plot_cm(y_test, y_pred):
     plt.close()
 
 
-# ── 5. 主流程 ─────────────────────────────
-def main():
-    if not os.path.exists(DATA_PATH):
-        print(f"[ERROR] 找不到 {DATA_PATH}")
-        print("请下载：https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud")
-        return
+#  5. 主流程 
+    def main():
+        if not os.path.exists(DATA_PATH):
+            print(f"[ERROR] 找不到 {DATA_PATH}")
+            print("请下载：https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud")
+            return
 
     X_tr, X_val, X_test, y_tr, y_val, y_test = load_data()
 
